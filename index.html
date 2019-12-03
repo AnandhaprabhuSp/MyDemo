@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Media</title>
+  <style>
+    .img_main{
+      height: 300px;
+      width: 500px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main_content">
+  </div>
+
+  <script>
+    // Declaring api url
+    let apiUrl =
+      'https://psapi.voot.com/media/voot/v1/voot-web/content/specific/editorial?query=include:3600118b6f5a412530b493b0fc277814&responseType=common';
+    
+
+    //Doing fetch
+    fetch(
+      apiUrl
+    ).then(response => response.json()).then(res => {
+      console.log(res);
+
+
+      
+      // we got the response
+      if (res && res.result && res.result.length > 0) { //checking the response whether it is proper
+        // creating the main div to hold all the images
+        let mainContainer = document.createElement('div');  
+
+        //looping all the result elements we got from api - put console and check for understanding
+        res.result.forEach(arr => {
+
+          // for each elemeent we are creating one image element
+          let imgOne = document.createElement('img');
+          // providing src for the image tag
+          imgOne.src =
+            'https://v3img.voot.com/resizeMedium,w_845,h_475/' + arr.imageUri;
+            //providing the classname for the image 
+          imgOne.className = 'img_main';
+
+          // adding the image to the image container
+          mainContainer.appendChild(imgOne);
+        });
+
+        // at last adding the image container to the main container element which we declared in body 
+        document.getElementById('main_content').appendChild(mainContainer);
+      }
+
+    })
+  </script>
+</body>
+
+</html>
